@@ -32,7 +32,7 @@ const Product = ({title,productItem,addToCart}) => {
                 <h6>In Stock!</h6>
             </div>
         <div className="price">
-            <h4>${productItem.price}</h4>
+            <h4>RM{productItem.price}</h4>
             <button aria-label="Add" type="submit" className="add" onClick={() => handelAdd(productItem)}>
                 <ion-icon name="add"></ion-icon>
             </button>

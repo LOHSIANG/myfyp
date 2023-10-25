@@ -40,7 +40,7 @@ const ProductDetails = () => {
                         <Col md={6} style={{ paddingTop: '150px', paddingLeft: '100px'}}>
                             <h2>{selectedProduct?.productName}</h2>
                             <div className="info">
-                                <span className="price">${selectedProduct?.price}</span>
+                                <span className="price">RM{selectedProduct?.price}</span>
                                 <span>category:{selectedProduct?.category}</span>
                             </div>
                             <input className="qty-input" type="number" placeholder="Qty" value={quantity} onChange={handleQuantityChange} />

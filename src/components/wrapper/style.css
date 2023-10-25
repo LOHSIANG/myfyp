@@ -32,6 +32,9 @@
 }
 
 .wrapper p {
-  font-size: 15px;
+  font-size: 13px;
+  font-weight: 400;
   margin-top: 20px;
+  margin-left: 20px;
+  margin-right: 20px;
 }
