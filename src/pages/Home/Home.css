@@ -1,0 +1,8 @@
+/*   ---Home Slider---   */
+
+.homeSlide {
+    display: flex;
+    justify-content: center;
+    background-color: #f6f9fc;
+    padding-bottom: 0 !important;
+  }

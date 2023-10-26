@@ -1,11 +1,13 @@
 import { Fragment, useContext, useEffect, useState } from "react";
-import Banner from "../components/Banner/Banner";
-import { DataContainer } from "../App";
+import Banner from "../../components/Banner/Banner";
+import { DataContainer } from "../../App";
 import { Col, Container, Row } from "react-bootstrap";
-import ShopList from "../components/ShopList";
-import { products } from "../utils/products";
+import ShopList from "../../components/ShopList";
+import { products } from "../../utils/products";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import "../../index.css"
+import "./ProductDetails.css"
 
 const ProductDetails = () => {
     const [listSelected,setListSelected] =useState("desc");

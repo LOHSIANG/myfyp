@@ -1,10 +1,40 @@
 import { useContext, useEffect } from "react"
-import { DataContainer } from "../App"
-import { Col, Container, Row } from "react-bootstrap";
+import { DataContainer } from "../../App"
+import { Col, Container, Row } from "react-bootstrap"
+import { database } from '../../FirebaseConfig'
+import { getAuth } from 'firebase/auth'
+import "./Cart.css"
+import "../../index.css"
 
 const Cart = () => {
   const { CartItem, setCartItem, addToCart, decreaseQty, deleteProduct} =useContext(DataContainer);
   const totalPrice = CartItem.reduce((price, item) => price + item.qty * item.price, 0)
+
+  // Function to handle the checkout process and send data to Firebase
+  const handleCheckout = () => {
+    const user = getAuth().currentUser; // Using Firebase authentication
+    if (user) {
+      const purchasesRef = database.ref(`/users/${user.uid}/purchases`);
+      const purchaseData = {
+        products: CartItem,
+        totalPrice: totalPrice,
+        // Add other relevant purchase information
+      };
+
+      // Push the purchase data to Firebase using the database reference
+      purchasesRef.push(purchaseData);
+
+      // Clear the cart after checkout
+      setCartItem([]);
+
+      // Optionally, you can also clear the cart data in local storage
+      localStorage.removeItem('cartItem');
+    } else {
+      // Handle the case where the user is not authenticated
+      console.log('User is not logged in');
+    }
+  };
+  
   useEffect(()=> {
     window.scrollTo(0,0);
     if(CartItem.length ===0) {
@@ -31,7 +61,7 @@ const Cart = () => {
                             <Col xs={12} sm={9} className="cart-details">
                               <h3>{item.productName}</h3>
                               <h4>
-                                RM{item.price}.00 * {item.qty}
+                                RM{item.price}.00 x {item.qty}
                                 <span>RM{productQty}.00</span>
                               </h4>
                             </Col>
@@ -53,13 +83,16 @@ const Cart = () => {
                   )
                 })}
               </Col>
-              <Col md={4}>
+              <Col md={4} className="cart-summary">
                 <div className='cart-total'>
                   <h2>Cart Summary</h2>
                   <div className=' d_flex'>
                     <h4>Total Price :</h4>
                     <h3>RM{totalPrice}.00</h3>
                   </div>
+                  <button className="checkout-button" onClick={handleCheckout}>
+                    Checkout
+                  </button>
                 </div>
               </Col>
           </Row>
