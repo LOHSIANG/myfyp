@@ -19,6 +19,7 @@ export const DataContainer = createContext();
 function App() {
   const [CartItem, setCartItem] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const [userRole, setUserRole] = useState("user");
 
   const addToCart = (product, num = 1) => {
     const productExist = CartItem.find((item) => item.id === product.id);
@@ -46,6 +47,10 @@ function App() {
     localStorage.setItem("cartItem", JSON.stringify(CartItem));
   }, [CartItem]);
 
+  const handleLogin = (userData) => {
+    setUserRole(userData.role);
+  }
+
   return (
     <DataContainer.Provider value={{ CartItem, setCartItem, addToCart, decreaseQty, deleteProduct, selectedProduct, setSelectedProduct }}>
       <Suspense fallback={<Loader />}>
@@ -62,12 +67,13 @@ function App() {
             theme="light"
           />
           <Routes>
-            <Route path="/" element={<RegisterAndLogin />} />
+            <Route path="/" element={<RegisterAndLogin onLogin={handleLogin}/>} />
+            <Route path="/reset" element={<ForgotPassword />} />
             <Route
               path="/"
               element={
                 <>
-                  <NavBar />
+                  <NavBar userRole={userRole} />
                   <Outlet />
                   <Footer />
                 </>

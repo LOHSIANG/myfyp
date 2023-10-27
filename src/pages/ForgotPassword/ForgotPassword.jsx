@@ -7,6 +7,7 @@ import "./ForgotPassword.css"
 
 function ForgotPassword() {
   const history = useNavigate();
+  let navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -31,6 +32,7 @@ function ForgotPassword() {
           <input className="form-input" name="email" /><br/><br/>
           <button className="form-button">Reset</button>
         </form>
+        <button className="back-button" onClick={() => navigate(-1)}>Cancel</button> 
       </div>
     </div>
   </div>

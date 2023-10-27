@@ -1,49 +1,61 @@
 import React, { useState } from "react";
-import { database } from "../../FirebaseConfig";
-import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-} from "firebase/auth";
+import { database, db } from "../../FirebaseConfig";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { doc, setDoc, getDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
+import { Icon } from "@iconify/react";
 import "./RegisterAndLogin.css";
-import "../../index.css"
+import "../../index.css";
 
-function RegisterAndLogin() {
+function RegisterAndLogin({ onLogin }) {
   const [login, setLogin] = useState(false);
   const history = useNavigate();
 
-  const handleSubmit = (e, type) => {
+  const handleSubmit = async (e, type) => {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
-    if (type === "signup") {
-      createUserWithEmailAndPassword(database, email, password)
-        .then((data) => {
-          console.log(data, "authData");
-          history("/home");
-        })
-        .catch((err) => {
-          alert(err.code);
-          setLogin(true);
-        });
-    } else {
-      signInWithEmailAndPassword(database, email, password)
-        .then((data) => {
-          console.log(data, "authData");
-          history("/home");
-        })
-        .catch((err) => {
-          alert(err.code);
-        });
+
+    try {
+      if (type === "signup") {
+        const userCredential = await createUserWithEmailAndPassword(database, email, password);
+        const user = userCredential.user;
+        const userDocRef = doc(db, "users", user.uid);
+
+        await setDoc(userDocRef, { role: "user" }, { merge: true });
+        console.log("User role stored in Firestore");
+        history("/home");
+      } else {
+        const userCredential = await signInWithEmailAndPassword(database, email, password);
+        const user = userCredential.user;
+        const userDocRef = doc(db, "users", user.uid);
+        const docSnapshot = await getDoc(userDocRef);
+
+        if (docSnapshot.exists()) {
+          const userRole = docSnapshot.data().role;
+          console.log("userRole:", userRole);
+
+          if (userRole === "admin") {
+            history("/home");
+          } else {
+            history("/cart");
+          }
+        onLogin({ role: userRole });
+        }
+      }
+    } catch (error) {
+      console.error("Authentication error:", error);
+      alert(error.code);
     }
   }
 
   const handleReset = () => {
     history("/reset");
-  }
+  };
 
   return (
     <div className="form-container">
+      <Icon className="logo-icon" icon="ion:home-sharp"/>
       <div className="form-header-container">
         <div className="form-header">
           <div className={`form-tab ${login ? "active-tab" : ""}`} onClick={() => setLogin(true)}>
@@ -60,7 +72,9 @@ function RegisterAndLogin() {
       <form onSubmit={(e) => handleSubmit(e, login ? "signin" : "signup")}>
         <input className="form-input" name="email" placeholder="Email" />
         <input className="form-input" name="password" type="password" placeholder="Password" />
-        <p className="forgot-password" onClick={handleReset}>Forgot Password?</p>
+        <p className="forgot-password" onClick={handleReset}>
+          Forgot Password?
+        </p>
         <button className="form-button">{login ? "Sign In" : "Sign Up"}</button>
       </form>
     </div>

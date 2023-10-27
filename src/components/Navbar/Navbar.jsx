@@ -7,11 +7,12 @@ import { signOut } from "firebase/auth";
 import { database } from '../../FirebaseConfig';
 import { useNavigate } from "react-router-dom";
 
-const NavBar = () => {
+const NavBar = ({userRole}) => {
   const {CartItem,setCartItem} =useContext(DataContainer);
-  const [expand, setExpand] = useState(false);
+  const [setExpand] = useState(false);
   const [isFixed, setIsFixed] = useState(false);
   const [openProfile, setOpenProfile] = useState(false);
+  console.log("userRole:", userRole);
 
   const history = useNavigate()
     const handleSignOut = () =>{
@@ -65,6 +66,14 @@ const NavBar = () => {
                 </Link>
                 </Nav.Item>
                 
+                {userRole === "admin" && (
+                  <Nav.Item>
+                    <Link aria-label="Go to Admin Page" className="navbar-link" to="/admin">
+                      <span className="nav-link-label">Admin</span>
+                    </Link>
+                  </Nav.Item>
+                )}
+
                 <Nav.Item className="expanded-cart">
                   <div className="icon-container">
                     <i className="fas fa-user nav-icon" onClick={() => setOpenProfile((prev) => !prev)}></i>
@@ -83,6 +92,7 @@ const NavBar = () => {
                     </div>
                   </Link>
                 </Nav.Item>
+
               </Nav>
         </Navbar.Collapse>
         </Container>

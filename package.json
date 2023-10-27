@@ -1,5 +1,5 @@
 {
-  "name": "react-ecommerce",
+  "name": "react-myfyp",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -10,6 +10,7 @@
     "bootstrap": "^5.2.3",
     "es6-promise": "^4.2.8",
     "firebase": "^10.5.0",
+    "firestore": "^1.1.6",
     "react": "^18.2.0",
     "react-bootstrap": "^2.7.4",
     "react-dom": "^18.2.0",
@@ -45,5 +46,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@iconify/react": "^4.1.1"
   }
 }
