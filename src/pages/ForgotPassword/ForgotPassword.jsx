@@ -1,9 +1,9 @@
 import React from "react";
 import { sendPasswordResetEmail } from "firebase/auth";
-import { database } from "../../FirebaseConfig";
+import { auth } from "../../FirebaseConfig";
 import { useNavigate } from "react-router-dom";
-import { Icon } from "@iconify/react";
 import "./ForgotPassword.css"
+import logoImage from "../../Images/Ecom.png";
 
 function ForgotPassword() {
   const history = useNavigate();
@@ -12,7 +12,7 @@ function ForgotPassword() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const emailVal = e.target.email.value;
-    sendPasswordResetEmail(database, emailVal)
+    sendPasswordResetEmail(auth, emailVal)
       .then((data) => {
         alert("Check your email");
         history("/");
@@ -25,7 +25,7 @@ function ForgotPassword() {
   return (
   <div className="App">
     <div className="form-container">
-      <Icon className="lock-icon" icon="ri:lock-password-fill"/>
+      <img src={logoImage} alt="Logo" className="logo" />
       <div className="form-reset-header-container">
         <h1 className="form-title">Forgot Password</h1>
         <form onSubmit={(e) => handleSubmit(e)}>

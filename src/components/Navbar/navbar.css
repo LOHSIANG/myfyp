@@ -1,4 +1,9 @@
 /* Navbar Section  */
+.nav-logo {
+  width: 125px;
+  height: auto;
+}
+
 .navbar {
   position: relative !important;
   background-color: white;
@@ -41,6 +46,7 @@
   font-weight: bold;
   gap: 20px;
 }
+
 
 .dropDown{
   font-family: "Arial";
@@ -131,7 +137,7 @@
 }
 
 .navbar-brand {
-  color: rgb(4, 51, 114);
+  color: #ff7b00;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -140,6 +146,7 @@
 
 .navbar-brand ion-icon {
   font-size: 25px;
+  color: #ff7b00;
 }
 
 .logo {
@@ -161,7 +168,7 @@
 }
 
 .navbar-link :hover{
-  color: rgb(235, 153, 0) !important;
+  color: #ff7b00 !important;
 }
 
 .nav-link-label {
@@ -171,10 +178,16 @@
 }
 
 .nav-icon {
-  color: rgb(235, 153, 0);
+  color: #ff7b00;
   width: 30px;
   height: 30px;
   padding-top: 4px;
+  transition: color 0.3s;
+}
+
+.nav-icon:hover {
+  color: #ff4800;
+  transform: scale(1.1);
 }
 
 .cart {

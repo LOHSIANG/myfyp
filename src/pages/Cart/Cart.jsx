@@ -36,7 +36,7 @@ const Cart = () => {
   };
   
   useEffect(()=> {
-    window.scrollTo(0,0);
+    window.scrollTo(0,1);
     if(CartItem.length ===0) {
       const storedCart = localStorage.getItem("cartItem");
       setCartItem(JSON.parse(storedCart));

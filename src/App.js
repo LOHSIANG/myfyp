@@ -6,13 +6,14 @@ import Footer from "./components/Footer/Footer";
 import Loader from "./components/Loader/Loader";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import RegisterAndLogin from "./pages/RegisterAndLogin/RegisterAndLogin";
 
 const Home = lazy(() => import("./pages/Home/Home"));
 const Shop = lazy(() => import("./pages/Shop/Shop"));
 const Cart = lazy(() => import("./pages/Cart/Cart"));
 const ProductDetails = lazy(() => import("./pages/Product/ProductDetails"));
+const RegisterAndLogin = lazy(() => import("./pages/RegisterAndLogin/RegisterAndLogin"));
 const ForgotPassword = lazy(() => import("./pages/ForgotPassword/ForgotPassword"));
+const Profile = lazy(() => import("./pages/UserProfile/UserProfile"));
 
 export const DataContainer = createContext();
 
@@ -84,6 +85,7 @@ function App() {
               <Route path="/shop/:id" element={<ProductDetails />} />
               <Route path="/cart" element={<Cart />} />
               <Route path="/reset" element={<ForgotPassword />} />
+              <Route path="/profile" element={<Profile />} />
             </Route>
           </Routes>
         </Router>

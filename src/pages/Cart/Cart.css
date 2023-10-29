@@ -1,20 +1,22 @@
-/*   ---Cart Page---   */
+/* Cart Page */
 
 .cart-items {
   background: #f6f9fc;
-  height: auto;
-  margin-top: 50px;
+  margin-top: 100px;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: top;
+  flex-direction: column;
 }
 
 .cart-items .cart-total {
   background-color: white;
   padding: 20px;
   height: auto;
-  margin-bottom: 30px;
 }
 
 .cart-list {
-  position: relative;
   background: white;
   margin-bottom: 30px;
   padding: 20px;
@@ -33,30 +35,34 @@
   object-fit: contain;
 }
 
-@media (max-width:767px) {
-  .cart-items .container>.row {
+@media (max-width: 767px) {
+  .cart-items .container > .row {
     flex-wrap: wrap-reverse !important;
   }
 }
 
 .cart-items .cart-content {
-  align-items: flex-end;
+  display: flex; /* Use flex to keep the cart items at the same height */
+  align-items: center;
+  justify-content: space-between; /* Add space between product details and control buttons */
+}
+
+.cart-items .cart-details {
+  flex: 1; /* Allow product details to expand as needed */
+  text-align: center; /* Center-align product details */
 }
 
 .cart-items .cart-details h3 {
   font-size: 20px;
   font-weight: 500;
-  width: fit-content;
-  text-align: center;
   margin-top: 20px;
 }
 
 .cart-items .cart-details h4 {
   font-size: 15px;
   font-weight: 400;
-  margin-top: 50px;
+  margin-top: 10px; /* Reduce the margin for a better layout */
   color: grey;
-  width: fit-content;
 }
 
 .cart-items h4 span {
@@ -74,8 +80,7 @@
   display: flex;
   gap: 5px;
   justify-content: center;
-  padding: 0 !important;
-  margin: 20px 0 0;
+  margin-top: 20px;
 }
 
 .cartControl button {
@@ -137,25 +142,15 @@ button.delete ion-icon {
   font-size: 30px;
 }
 
-@media (max-width:575px) {
-  .cart-content .cart-details h3 {
-    margin: 10px auto;
-  }
-
-  .cart-content .cart-details h4 {
-    margin: 10px auto;
-  }
-}
-
 .checkout-button {
-  background-color: #ff6600;
+  background-color: #ff7b00;
   color: #fff;
   padding: 10px 20px;
   font-size: 16px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  margin-top: 10px; 
+  margin-top: 10px;
 }
 
 .checkout-button:hover {
@@ -166,4 +161,3 @@ button.delete ion-icon {
 .checkout-button-container {
   text-align: center;
 }
-
