@@ -1,5 +1,4 @@
 import { Fragment, useContext, useEffect } from "react"
-import Section from "../../components/Section"
 import {products} from "../../utils/products"
 import { DataContainer } from "../../App"
 import SliderHome from "../../components/Slider"
@@ -16,8 +15,7 @@ const Home = () => {
   return (
     <Fragment>
         <SliderHome/>
-        <Section title="New Arrivals" bgColor="#F5F5F5" productItems={newArrivalData} addToCart={addToCart}/>
-        {/*<Section title="Best Sales" bgColor="#f6f9fc" productItems={bestSales} addToCart={addToCart}/> */}
+
     </Fragment>
   )
 }
