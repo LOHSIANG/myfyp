@@ -126,16 +126,6 @@
   opacity: 0.9 !important;
 }
 
-@media (max-width: 767px) {
-  .navbar {
-    font-size: 1.4rem !important;
-  }
-
-  .navbar-nav .nav-item::after {
-    display: none !important;
-  }
-}
-
 .navbar-brand {
   color: #ff7b00;
   display: flex;
@@ -213,12 +203,6 @@
   z-index: 5;
 }
 
-@media (max-width: 767px) {
-  .nav-link {
-    padding: 0.7rem 1rem !important;
-  }
-}
-
 .navbar-nav .nav-item {
   position: relative;
   padding-bottom: 3px !important;
@@ -239,29 +223,4 @@
 
 .media-cart {
   display: none;
-}
-
-@media (max-width:767px) {
-  .navbar-toggler span {
-    width: 25px !important;
-    height: 3px !important;
-  }
-  ion-icon {
-    font-size: 20px;
-  }
-
-  .logo {
-    font-size: 20px;
-  }
-
-  .expanded-cart {
-    display: none !important;
-  }
-
-  .media-cart {
-    display: flex;
-    align-items: flex-end;
-    gap: 5px;
-  }
-  
 }

@@ -25,6 +25,7 @@ const UserProfile = () => {
   };
 
   useEffect(() => {
+    window.scrollTo(0, 1);
     fetchUserProfile();
   }, []);
 
@@ -71,8 +72,8 @@ const UserProfile = () => {
           <input
             className="profile-input"
             type="text"
-            id="phoneNumber"
-            value={userProfile.phoneNumber}
+            id="phone"
+            value={userProfile.phone}
             onChange={(e) => setUserProfile({ ...userProfile, phoneNumber: e.target.value })}
           />
         </div>

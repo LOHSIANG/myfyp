@@ -14,6 +14,7 @@ const ProductDetails = lazy(() => import("./pages/Product/ProductDetails"));
 const RegisterAndLogin = lazy(() => import("./pages/RegisterAndLogin/RegisterAndLogin"));
 const ForgotPassword = lazy(() => import("./pages/ForgotPassword/ForgotPassword"));
 const Profile = lazy(() => import("./pages/UserProfile/UserProfile"));
+const TrackOrder = lazy(() => import("./pages/TrackOrder/TrackOrder"));
 
 export const DataContainer = createContext();
 
@@ -86,6 +87,7 @@ function App() {
               <Route path="/cart" element={<Cart />} />
               <Route path="/reset" element={<ForgotPassword />} />
               <Route path="/profile" element={<Profile />} />
+              <Route path="/trackorder" element={<TrackOrder />} />
             </Route>
           </Routes>
         </Router>

@@ -1,9 +1,8 @@
 /* Cart Page */
-
 .cart-items {
   background: #f6f9fc;
   margin-top: 100px;
-  min-height: 100vh;
+  min-height: 50vh;
   display: flex;
   align-items: center;
   justify-content: top;
@@ -35,21 +34,15 @@
   object-fit: contain;
 }
 
-@media (max-width: 767px) {
-  .cart-items .container > .row {
-    flex-wrap: wrap-reverse !important;
-  }
-}
-
 .cart-items .cart-content {
-  display: flex; /* Use flex to keep the cart items at the same height */
+  display: flex; 
   align-items: center;
-  justify-content: space-between; /* Add space between product details and control buttons */
+  justify-content: space-between;
 }
 
 .cart-items .cart-details {
-  flex: 1; /* Allow product details to expand as needed */
-  text-align: center; /* Center-align product details */
+  flex: 1;
+  text-align: center;
 }
 
 .cart-items .cart-details h3 {
@@ -61,7 +54,7 @@
 .cart-items .cart-details h4 {
   font-size: 15px;
   font-weight: 400;
-  margin-top: 10px; /* Reduce the margin for a better layout */
+  margin-top: 10px;
   color: grey;
 }
 
@@ -100,14 +93,19 @@
   background: #f6f9fc;
 }
 
+.cartCol {
+  align-self: flex-start;
+}
+
+
 .cart-total h4 {
   font-size: 15px;
-  font-weight: 400;
+  font-weight: 500;
 }
 
 .cart-total h3 {
   font-size: 20px;
-  font-weight: 500;
+  font-weight: 00;
   color: #0f3460;
 }
 
@@ -160,4 +158,25 @@ button.delete ion-icon {
 
 .checkout-button-container {
   text-align: center;
+}
+
+.warehouse-select {
+  width: 100%;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.warehouse-address {
+  background-color: #f0f0f0;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+}
+
+.warehouse-address h7{
+  font-size: 11px;
 }

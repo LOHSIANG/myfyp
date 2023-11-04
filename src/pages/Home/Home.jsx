@@ -1,23 +1,30 @@
-import { Fragment, useContext, useEffect } from "react"
-import {products} from "../../utils/products"
-import { DataContainer } from "../../App"
-import SliderHome from "../../components/Slider"
-import "./Home.css"
-import "../../index.css"
+import { Fragment, useContext, useEffect } from "react";
+import { DataContainer } from "../../App";
+import { Container } from "react-bootstrap";
+import { products } from "../../utils/products";
+import SliderHome from "../../components/SliderCard/Slider";
+import ShopList from "../../components/ShopList/ShopList";
+import "./Home.css";
+import "../../index.css";
 
 const Home = () => {
-  const {addToCart} =useContext(DataContainer);
-  const newArrivalData = products.filter(item => item.category ==="mobile" || item.category ==="wireless");
-  const bestSales = products.filter(item => item.category ==="sofa");
-  useEffect(()=> {
-    window.scrollTo(0,0);
-  },[])
+  const { addToCart } = useContext(DataContainer);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
-    <Fragment>
-        <SliderHome/>
-
+    <Fragment className="home">
+      <SliderHome />
+      <section className="products">
+        <Container>
+          <h1>New Arrivals</h1>
+            <ShopList productItems={products} addToCart={addToCart}/>
+        </Container>
+      </section>
     </Fragment>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;

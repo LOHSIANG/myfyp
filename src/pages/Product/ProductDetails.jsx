@@ -2,7 +2,7 @@ import { Fragment, useContext, useEffect, useState } from "react";
 import Banner from "../../components/Banner/Banner";
 import { DataContainer } from "../../App";
 import { Col, Container, Row } from "react-bootstrap";
-import ShopList from "../../components/ShopList";
+import ShopList from "../../components/ShopList/ShopList";
 import { products } from "../../utils/products";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -32,18 +32,18 @@ const ProductDetails = () => {
     },[selectedProduct])
     return ( 
         <Fragment>
-            <Banner title={selectedProduct?.productName} />
+            <Banner title={selectedProduct?.title} />
             <section className="product-page">
                 <Container>
                     <Row className="justify-content-center">
-                        <Col md={6}>
-                            <img loading="lazy" src={selectedProduct?.imgUrl} alt=""/>
+                        <Col>
+                            <img loading="lazy" src={selectedProduct?.img} alt=""/>
                         </Col>
-                        <Col md={6} style={{ paddingTop: '150px', paddingLeft: '100px'}}>
-                            <h2>{selectedProduct?.productName}</h2>
+                        <Col style={{ paddingTop: '50px', paddingLeft: '100px'}}>
+                            <h2>{selectedProduct?.title}</h2>
+                            <span className="desc">{selectedProduct?.desc}</span>
                             <div className="info">
                                 <span className="price">RM{selectedProduct?.price}</span>
-                                <span>category:{selectedProduct?.category}</span>
                             </div>
                             <input className="qty-input" type="number" placeholder="Qty" value={quantity} onChange={handleQuantityChange} />
                             <button aria-label="Add" type="submit" className="add" onClick={() => handelAdd(selectedProduct,quantity)}>Add To Cart</button>

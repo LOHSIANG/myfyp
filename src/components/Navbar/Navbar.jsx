@@ -5,23 +5,22 @@ import logoImage from "../../Images/Ecom.png";
 import { DataContainer } from "../../App";
 import { Link } from "react-router-dom";
 import { signOut } from "firebase/auth";
-import { auth } from '../../FirebaseConfig';
+import { auth } from "../../FirebaseConfig";
 import { useNavigate } from "react-router-dom";
 
 const NavBar = ({ userRole }) => {
   const { CartItem, setCartItem } = useContext(DataContainer);
   const [isFixed, setIsFixed] = useState(false);
   const [openProfile, setOpenProfile] = useState(false);
-  console.log("userRole:", userRole);
 
   const history = useNavigate();
 
   const handleSignOut = () => {
-    signOut(auth).then(val => {
+    signOut(auth).then((val) => {
       console.log(val, "val");
-      history('/');
+      history("/");
     });
-  }
+  };
 
   // fixed Header
   function scrollHandler() {
@@ -43,30 +42,46 @@ const NavBar = ({ userRole }) => {
       className={isFixed ? "navbar fixed" : "navbar"}
     >
       <Container className="navbar-container">
-          <img src={logoImage} alt="Logo" className="nav-logo" />
+        <img src={logoImage} alt="Logo" className="nav-logo" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="justify-content-end flex-grow-1 pe-3">
             <Nav.Item>
-              <Link aria-label="Go to Home Page" className="navbar-link" to="/home">
+              <Link
+                aria-label="Go to Home Page"
+                className="navbar-link"
+                to="/home"
+              >
                 <span className="nav-link-label">Home</span>
               </Link>
             </Nav.Item>
 
             <Nav.Item>
-              <Link aria-label="Go to Shop Page" className="navbar-link" to="/shop">
+              <Link
+                aria-label="Go to Shop Page"
+                className="navbar-link"
+                to="/shop"
+              >
                 <span className="nav-link-label">Shop</span>
               </Link>
             </Nav.Item>
 
             <Nav.Item>
-              <Link aria-label="Go to Cart Page" className="navbar-link" to="/cart">
+              <Link
+                aria-label="Go to Cart Page"
+                className="navbar-link"
+                to="/cart"
+              >
                 <span className="nav-link-label">Cart</span>
               </Link>
             </Nav.Item>
 
             {userRole === "admin" && (
               <Nav.Item>
-                <Link aria-label="Go to Admin Page" className="navbar-link" to="/admin">
+                <Link
+                  aria-label="Go to Admin Page"
+                  className="navbar-link"
+                  to="/admin"
+                >
                   <span className="nav-link-label">Admin</span>
                 </Link>
               </Nav.Item>
@@ -74,18 +89,38 @@ const NavBar = ({ userRole }) => {
 
             <Nav.Item className="expanded-cart">
               <div className="icon-container">
-                <i className="fas fa-user nav-icon" onClick={() => setOpenProfile((prev) => !prev)}></i>
+                <i
+                  className="fas fa-user nav-icon"
+                  onClick={() => setOpenProfile((prev) => !prev)}
+                ></i>
               </div>
               {openProfile && (
                 <div className="dropDownProfile">
                   <ul className="dropDownContent">
-                    <li><Link to="/profile" className="dropDown">Profile</Link></li>
-                    <li><Link to="/track-order" className="dropDown">Track Order</Link></li>
-                    <li><a href="#" onClick={handleSignOut} className="dropDown">Sign Out</a></li>
+                    <li>
+                      <Link to="/profile" className="dropDown">
+                        Profile
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/trackorder" className="dropDown">
+                        Track Order
+                      </Link>
+                    </li>
+                    <li>
+                      <a href="#" onClick={handleSignOut} className="dropDown">
+                        Sign Out
+                      </a>
+                    </li>
                   </ul>
                 </div>
               )}
-              <Link aria-label="Go to Cart Page" to="/cart" className="cart" data-num={CartItem.length}>
+              <Link
+                aria-label="Go to Cart Page"
+                to="/cart"
+                className="cart"
+                data-num={CartItem.length}
+              >
                 <div className="icon-container">
                   <i className="fas fa-shopping-cart nav-icon"></i>
                 </div>
@@ -96,6 +131,6 @@ const NavBar = ({ userRole }) => {
       </Container>
     </Navbar>
   );
-}
+};
 
 export default NavBar;

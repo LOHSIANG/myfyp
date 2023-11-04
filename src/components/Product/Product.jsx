@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { Col } from "react-bootstrap";
+import { Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { DataContainer } from "../../App";
 import { toast } from "react-toastify";
@@ -27,12 +27,10 @@ const Product = ({ addToCart }) => {
       }
     };
   
-    fetchData(); // Fetch data when the component mounts
-  
     return () => {
-      // Cleanup code to prevent re-fetching (empty function)
+        fetchData();
     };
-  }, []); // Empty dependency array means this effect runs once when the component mounts
+  }, []);
 
   const handleProductClick = (product) => {
     setSelectedProduct(product);
@@ -40,19 +38,26 @@ const Product = ({ addToCart }) => {
     router(`/shop/${product.id}`);
   };
 
+
+  const addButton = document.getElementById("addButton");
   const handleAddToCart = (product) => {
-    addToCart(product);
-    toast.success("Product has been added to the cart!");
+    if (product.quantity > 0) {
+      addToCart(product);
+      toast.success("Product has been added to the cart!");
+    } else {
+      toast.error("This product is out of stock and cannot be added to the cart.");
+      addButton.disabled = true;
+    }
   };
 
   return (
-    <div>
+    <Row className="justify-content-center">
       {productData.map((product) => (
-        <Col key={product.id} md={3} sm={5} xs={10} className="product mtop">
+        <div key={product.id} className="product mtop">
           <img
             loading="lazy"
             onClick={() => handleProductClick(product)}
-            src={product.imageUrl}
+            src={product.img}
             alt=""
           />
           <div className="product-details">
@@ -60,13 +65,18 @@ const Product = ({ addToCart }) => {
               {product.title}
             </h3>
             <div className="stock">
-              <h6>In Stock!</h6>
+              {product.quantity === 0 ? (
+                <h6 className="outOfStock">Out of Stock!</h6>
+              ) : (
+                <h6 className="inStock">In Stock!</h6>
+              )}
             </div>
             <div className="price">
               <h4>RM{product.price}</h4>
               <button
+                id="addButton"
                 aria-label="Add"
-                type="submit"
+                type="button"
                 className="add"
                 onClick={() => handleAddToCart(product)}
               >
@@ -74,9 +84,9 @@ const Product = ({ addToCart }) => {
               </button>
             </div>
           </div>
-        </Col>
+        </div>
       ))}
-    </div>
+    </Row>
   );
 };
 
