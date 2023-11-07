@@ -41,14 +41,16 @@ const Product = ({ addToCart }) => {
 
   const addButton = document.getElementById("addButton");
   const handleAddToCart = (product) => {
-    if (product.quantity > 0) {
+    const totalQuantity = product.wh1qty + product.wh2qty + product.wh3qty;
+  
+    if (totalQuantity > 0) {
       addToCart(product);
       toast.success("Product has been added to the cart!");
     } else {
       toast.error("This product is out of stock and cannot be added to the cart.");
-      addButton.disabled = true;
     }
   };
+  
 
   return (
     <Row className="justify-content-center">
@@ -65,10 +67,10 @@ const Product = ({ addToCart }) => {
               {product.title}
             </h3>
             <div className="stock">
-              {product.quantity === 0 ? (
-                <h6 className="outOfStock">Out of Stock!</h6>
-              ) : (
+              {product.wh1qty > 0 && product.wh2qty > 0 && product.wh3qty > 0 ? (
                 <h6 className="inStock">In Stock!</h6>
+              ) : (
+                <h6 className="outOfStock">Out of Stock!</h6>
               )}
             </div>
             <div className="price">
