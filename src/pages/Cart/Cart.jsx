@@ -24,59 +24,69 @@ const Cart = () => {
   const handleCheckout = async () => {
     const user = getAuth().currentUser;
   
-    // Check if the user is logged in
-    if (user) {
-      // Check if a warehouse is selected
-      if (selectedWarehouse) {
-        // Create a new order document in Firestore
-        const ordersCollection = collection(db, 'orders');
-        const orderData = {
-          userId: user.uid,
-          products: CartItem,
-          selectedWarehouse: selectedWarehouse,
-          totalPrice: totalPrice,
-          timeStamp: serverTimestamp(),
-          status: 'processing',
-        };
-  
-        // Add the order to Firestore
-        const orderDocRef = await addDoc(ordersCollection, orderData);
-  
-        // Deduct the quantity of products in Firestore based on the selected warehouse
-        for (const item of CartItem) {
-          const productDocRef = doc(db, 'products', item.id);
-          const productSnapshot = await getDoc(productDocRef);
-          if (productSnapshot.exists()) {
-            const productData = productSnapshot.data();
-  
-            if (selectedWarehouse === 'Warehouse-1') {
-              const newQuantity = productData.wh1qty - item.qty;
-              const updateData = { wh1qty: newQuantity };
-              await updateDoc(productDocRef, updateData);
-            } else if (selectedWarehouse === 'Warehouse-2') {
-              const newQuantity = productData.wh2qty - item.qty;
-              const updateData = { wh2qty: newQuantity };
-              await updateDoc(productDocRef, updateData);
-            } else if (selectedWarehouse === 'Warehouse-3') {
-              const newQuantity = productData.wh3qty - item.qty;
-              const updateData = { wh3qty: newQuantity };
-              await updateDoc(productDocRef, updateData);
-            }
-          }
-        }
-  
-        // Clear the cart after checkout
-        setCartItem([]);
-        localStorage.removeItem('cartItem');
-        history("/home");
-        toast.success('Order successfully created!');
-      } else {
-        toast.error('Please select a warehouse.');
-      }
-    } else {
+    if (!user) {
       console.log('User is not logged in');
+      return;
     }
+  
+    if (!selectedWarehouse) {
+      toast.error('Please select a warehouse.');
+      return;
+    }
+  
+    // Check if the selected warehouse has enough quantity
+    let hasSufficientQuantity = true;
+    for (const item of CartItem) {
+      const productDocRef = doc(db, 'products', item.id);
+      const productSnapshot = await getDoc(productDocRef);
+  
+      if (productSnapshot.exists()) {
+        const productData = productSnapshot.data();
+        const warehouseKey = `wh${selectedWarehouse.slice(-1)}qty`;
+  
+        if (productData[warehouseKey] < item.qty) {
+          hasSufficientQuantity = false;
+          toast.error(`Insufficient ${productData.title} in the selected warehouse. Please drop ${productData.title} or change warehouse.`);
+          break;
+        }
+      }
+    }
+  
+    if (!hasSufficientQuantity) {
+      return;
+    }
+  
+    const ordersCollection = collection(db, 'orders');
+    const orderData = {
+      userId: user.uid,
+      products: CartItem,
+      selectedWarehouse: selectedWarehouse,
+      totalPrice: totalPrice,
+      timeStamp: serverTimestamp(),
+      status: 'processing',
+    };
+  
+    const orderDocRef = await addDoc(ordersCollection, orderData);
+  
+    for (const item of CartItem) {
+      const productDocRef = doc(db, 'products', item.id);
+      const productSnapshot = await getDoc(productDocRef);
+  
+      if (productSnapshot.exists()) {
+        const productData = productSnapshot.data();
+        const warehouseKey = `wh${selectedWarehouse.slice(-1)}qty`;
+        const newQuantity = productData[warehouseKey] - item.qty;
+        const updateData = { [warehouseKey]: newQuantity };
+        await updateDoc(productDocRef, updateData);
+      }
+    }
+  
+    setCartItem([]);
+    localStorage.removeItem('cartItem');
+    history("/home");
+    toast.success('Order successfully created!');
   };
+  
   
   
   useEffect(()=> {

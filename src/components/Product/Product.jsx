@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { DataContainer } from "../../App";
 import { toast } from "react-toastify";
 import { db } from '../../FirebaseConfig';
-import { doc, collection, getDocs } from "firebase/firestore";
+import { collection, getDocs } from "firebase/firestore";
 import "./product.css";
 
 const Product = ({ addToCart }) => {
@@ -21,7 +21,6 @@ const Product = ({ addToCart }) => {
           list.push({ id: doc.id, ...doc.data() });
         });
         setProductData(list);
-        console.log("Retrieved product data from Firestore:", list);
       } catch (error) {
         console.error("Error fetching product data:", error);
       }
@@ -38,8 +37,6 @@ const Product = ({ addToCart }) => {
     router(`/shop/${product.id}`);
   };
 
-
-  const addButton = document.getElementById("addButton");
   const handleAddToCart = (product) => {
     const totalQuantity = product.wh1qty + product.wh2qty + product.wh3qty;
   
@@ -67,7 +64,7 @@ const Product = ({ addToCart }) => {
               {product.title}
             </h3>
             <div className="stock">
-              {product.wh1qty > 0 && product.wh2qty > 0 && product.wh3qty > 0 ? (
+              {product.wh1qty > 0 || product.wh2qty > 0 || product.wh3qty > 0 ? (
                 <h6 className="inStock">In Stock!</h6>
               ) : (
                 <h6 className="outOfStock">Out of Stock!</h6>

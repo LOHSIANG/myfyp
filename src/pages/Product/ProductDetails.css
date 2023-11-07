@@ -5,12 +5,6 @@
   object-fit: contain;
 }
 
-@media (max-width: 767px) {
-  .product-page .row {
-      gap: 30px;
-  }
-}
-
 .product-page .info {
   display: flex;
   gap: 40px;
