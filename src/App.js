@@ -21,7 +21,7 @@ export const DataContainer = createContext();
 function App() {
   const [CartItem, setCartItem] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
-  const [userRole, setUserRole] = useState("user");
+  const [userRole, setUserRole] = useState(null);
 
   const addToCart = (product, num = 1) => {
     const productExist = CartItem.find((item) => item.id === product.id);
