@@ -49,12 +49,12 @@ function RegisterAndLogin({ onLogin }) {
         const user = userCredential.user;
         const userDocRef = doc(db, "users", user.uid);
         const docSnapshot = await getDoc(userDocRef);
-
+  
         if (docSnapshot.exists()) {
           const userRole = docSnapshot.data().role;
+          onLogin({ role: userRole });
+          localStorage.setItem("userRole", userRole);
           history("/home");
-          console.log("userRole:", userRole);
-        onLogin({ role: userRole });
         }
       }
     } catch (error) {

@@ -8,26 +8,33 @@ import { signOut } from "firebase/auth";
 import { auth } from "../../FirebaseConfig";
 import { useNavigate } from "react-router-dom";
 
-const NavBar = ({ userRole }) => {
+const NavBar = ({}) => {
   const { CartItem, setCartItem } = useContext(DataContainer);
   const [isFixed, setIsFixed] = useState(false);
   const [openProfile, setOpenProfile] = useState(false);
-
   const history = useNavigate();
+  const [userRole, setUserRole] = useState(null);
 
   const handleSignOut = () => {
+    localStorage.removeItem("userRole");
     signOut(auth).then((val) => {
       console.log(val, "val");
       history("/");
     });
   };
 
-  // fixed Header
   function scrollHandler() {
     setIsFixed(true);
   }
   window.addEventListener("scroll", scrollHandler);
 
+  useEffect(() => {
+    const storedUserRole = localStorage.getItem("userRole");
+    if (storedUserRole) {
+      setUserRole(storedUserRole);
+    }
+  }, []);
+  
   useEffect(() => {
     if (CartItem.length === 0) {
       const storedCart = localStorage.getItem("cartItem");
